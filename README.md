@@ -1,4 +1,4 @@
-Clickpay android library sample( PT2 Version)
+Clickpay android library sample
 ========
 
 Install
