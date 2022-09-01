@@ -12,11 +12,7 @@ Library requires at minimum Java 7 or Android 5.1.
 You have to include the following dependencies:
 
 ```
-```groovy
-
     implementation 'sa.com.clickpay:payment-sdk:6.1.11'
-   
-
 ```
 Proguard
 --------
