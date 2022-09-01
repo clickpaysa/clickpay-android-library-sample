@@ -43,19 +43,19 @@ class MainActivity : AppCompatActivity(), CallbackPaymentInterface {
 
 
     private fun generatePaytabsConfigurationDetails(selectedApm: PaymentSdkApms? = null): PaymentSdkConfigurationDetails {
-        val profileId = "*profile ID*"
-        val serverKey = "*server key*"
-        val clientKey = "*client key*"
+        val profileId = "42007"
+        val serverKey = "STJNLJWLDL-JBJRGGBRBD-6NHBMHTKMM"
+        val clientKey = "CKKMD9-HQVQ62-6RTT2R-GRMP2B"
         val locale = PaymentSdkLanguageCode.EN /*Or PaymentSdkLanguageCode.AR*/
         val transactionTitle = "Test SDK"
         val orderId = "123456"
         val cartDesc = "Cart description"
-        val currency = "Currency"
+        val currency = "SAR"
         val amount = 20.0
-        val merchantCountryCode = "Country Code ISO2"
+        val merchantCountryCode = "SA"
         val billingData = PaymentSdkBillingDetails(
             "City",
-            "Country Code ISO2",
+            "SA",
             "email1@domain.com",
             "name name",
             "+966568595106", "121321",
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity(), CallbackPaymentInterface {
         )
         val shippingData = PaymentSdkShippingDetails(
             "City",
-            "Country Code ISO2",
+            "SA",
             "test@test.com",
             "name1 last1",
             "+966568595106", "3510",
@@ -76,15 +76,14 @@ class MainActivity : AppCompatActivity(), CallbackPaymentInterface {
         )
             .setCartDescription(cartDesc)
             .setLanguageCode(locale)
-            .setMerchantIcon(ContextCompat.getDrawable(this, R.drawable.payment_sdk_adcb_logo))
             .setBillingData(billingData)
             .setMerchantCountryCode(merchantCountryCode)
             .setTransactionType(PaymentSdkTransactionType.SALE)
             .setTransactionClass(PaymentSdkTransactionClass.ECOM)
             .setShippingData(shippingData)
-            .setTokenise(PaymentSdkTokenise.USER_MANDATORY) //Check other tokenizing types in PaymentSdkTokenise
+            .setTokenise(PaymentSdkTokenise.NONE) //Check other tokenizing types in PaymentSdkTokenise
             .setCartId(orderId)
-            .showBillingInfo(true)
+            .showBillingInfo(false)
             .showShippingInfo(false)
             .forceShippingInfo(false)
             .setScreenTitle(transactionTitle)
