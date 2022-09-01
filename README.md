@@ -1,13 +1,13 @@
 Clickpay android library sample
 ========
 
-Install
---------
 ## Requirements
 - compileSdkVersion 31
 - targetSdkVersion 31
 Library requires at minimum Java 7 or Android 5.1.
 --------
+
+## Install
 
 You have to include the following dependencies:
 
