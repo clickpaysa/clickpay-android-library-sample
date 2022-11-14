@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Paytabs Android SDK Demo</string>
+    <string name="app_name">ClickPay Android SDK Demo</string>
     <string-array name="currencies">
         <item>BHD</item>
         <item>USD</item>
