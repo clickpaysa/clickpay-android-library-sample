@@ -60,7 +60,7 @@ dependencies {
     implementation('com.github.ganfra:material-spinner:2.0.0') {
         exclude group: 'com.android.support', module: 'appcompat-v7'
     }
-    implementation 'sa.com.clickpay:payment-sdk:6.1.11'
+    implementation 'sa.com.clickpay:payment-sdk:6.3.0'
 
     implementation 'androidx.fragment:fragment-ktx:1.5.2'
     implementation project(":samsungpay")

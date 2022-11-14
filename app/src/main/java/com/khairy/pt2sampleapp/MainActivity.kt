@@ -2,12 +2,11 @@ package com.khairy.pt2sampleapp
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.khairy.pt2sampleapp.databinding.ActivityMainBinding
 import com.payment.paymentsdk.PaymentSdkActivity.Companion.startAlternativePaymentMethods
-import com.payment.paymentsdk.PaymentSdkActivity.Companion.startCardPayment
+import com.payment.paymentsdk.PaymentSdkActivity.Companion.startPaymentWithSavedCards
 import com.payment.paymentsdk.PaymentSdkConfigBuilder
 import com.payment.paymentsdk.integrationmodels.*
 import com.payment.paymentsdk.sharedclasses.interfaces.CallbackPaymentInterface
@@ -26,7 +25,36 @@ class MainActivity : AppCompatActivity(), CallbackPaymentInterface {
         setContentView(view)
         b.pay.setOnClickListener {
             val configData = generatePaytabsConfigurationDetails()
-            startCardPayment(this, configData, this)
+//            startCardPayment(
+//                this,
+//                configData,
+//                this
+//            )
+//            start3DSecureTokenizedCardPayment(
+//                this,
+//                configData,
+//                PaymentSDKSavedCardInfo("4111 11## #### 1111", "visa"),
+//                "2C4652BF67A3EA33C6B590FE658078BD",
+//                this
+//            )
+
+            /*
+            **The rest of payment methods
+            startTokenizedCardPayment(
+                this,
+                configData,
+                "Token",
+                "TransactionRef",
+                this
+            )
+            *
+            * */
+            startPaymentWithSavedCards(
+                this,
+                configData,
+                false,
+                this
+            )
         }
         b.stcPay.setOnClickListener {
             val configData = generatePaytabsConfigurationDetails(PaymentSdkApms.STC_PAY)
@@ -43,9 +71,9 @@ class MainActivity : AppCompatActivity(), CallbackPaymentInterface {
 
 
     private fun generatePaytabsConfigurationDetails(selectedApm: PaymentSdkApms? = null): PaymentSdkConfigurationDetails {
-        val profileId = "42007"
-        val serverKey = "STJNLJWLDL-JBJRGGBRBD-6NHBMHTKMM"
-        val clientKey = "CKKMD9-HQVQ62-6RTT2R-GRMP2B"
+        val profileId = "****"
+        val serverKey = "*********"
+        val clientKey = "*********"
         val locale = PaymentSdkLanguageCode.EN /*Or PaymentSdkLanguageCode.AR*/
         val transactionTitle = "Test SDK"
         val orderId = "123456"
