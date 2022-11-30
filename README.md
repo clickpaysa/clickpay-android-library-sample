@@ -348,8 +348,8 @@ to the payment configuration.
 ## Override strings
 
 To override string you can find the keys with the default values here
-![english]( https://github.com/paytabscom/paytabs-android-library-sample/blob/master/res/strings.xml)
-![arabic](https://github.com/paytabscom/paytabs-android-library-sample/blob/master/res/strings-ar.xml)
+[english]( https://github.com/paytabscom/paytabs-android-library-sample/blob/master/res/strings.xml)
+[arabic](https://github.com/paytabscom/paytabs-android-library-sample/blob/master/res/strings-ar.xml)
 
 ````xml
 
