@@ -92,7 +92,7 @@ or
 startSamsungPayment(this, configData, "samsungpay token", callback = this)
 
 override fun onError(error: PaymentSdkError) {
-    Log.d(TAG_PAYTABS, "onError: $error")
+    Log.d(TAG, "onError: $error")
     Toast.makeText(this, "${error.msg}", Toast.LENGTH_SHORT).show()
 }
 
@@ -102,13 +102,13 @@ override fun onPaymentFinish(PaymentSdkTransactionDetails: PaymentSdkTransaction
         "${paymentSdkTransactionDetails.paymentResult?.responseMessage}",
         Toast.LENGTH_SHORT
     ).show()
-    Log.d(TAG_PAYTABS, "onPaymentFinish: $paymentSdkTransactionDetails")
+    Log.d(TAG, "onPaymentFinish: $paymentSdkTransactionDetails")
 
 }
 
 override fun onPaymentCancel() {
     Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show()
-    Log.d(TAG_PAYTABS, "onPaymentCancel:")
+    Log.d(TAG, "onPaymentCancel:")
 
 }
 
@@ -302,7 +302,7 @@ To enable tokenisation please follow the below instructions
 
 1. To enable pay with samsungpay you need first to integrate with SamsungPay api. Here how you can
    integrate with SamsungPay Api.
-   [SamsungPay Integration Guide](https://github.com/paytabscom/paytabs-android-library-sample/blob/master/samsung_pay.md)
+   [SamsungPay Integration Guide](https://github.com/clickpaysa/clickpay-android-library-sample/blob/master/samsung_pay.md)
    .
 
 2. Pass the returned json token from samsung pay to the following method.
@@ -348,8 +348,8 @@ to the payment configuration.
 ## Override strings
 
 To override string you can find the keys with the default values here
-[english]( https://github.com/paytabscom/paytabs-android-library-sample/blob/master/res/strings.xml)
-[arabic](https://github.com/paytabscom/paytabs-android-library-sample/blob/master/res/strings-ar.xml)
+[english]( https://github.com/clickpaysa/clickpay-android-library-sample/blob/master/res/strings.xml)
+[arabic](https://github.com/clickpaysa/clickpay-android-library-sample/blob/master/res/strings-ar.xml)
 
 ````xml
 
@@ -393,21 +393,9 @@ configurations.all {
 
 ## See the common issues from here
 
-[common issues](https://github.com/paytabscom/paytabs-android-library-sample/blob/master/common_issues.md)
+[common issues](https://github.com/clickpaysa/clickpay-android-library-sample/blob/master/common_issues.md)
 
 ## Notes
 
 1- Please configure the IPN to avoid loosing any of the transaction status.
 
-PaymentSdk
---------
-[Support][2] | [Terms of Use][3] | [Privacy Policy][4]
-
-
-[1]: https://dev.paytabs.com/docs/android/
-
-[2]: https://support.paytabs.com
-
-[3]: https://www.paytabs.com/en/terms-of-use/
-
-[4]: https://www.paytabs.com/en/privacy-policy/
