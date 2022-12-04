@@ -122,7 +122,7 @@ override fun onPaymentCancel() {
 startCardPayment(context = this, ptConfigData = configData, callback = this)
 ```
 
-<img width="191" alt="card" src="https://user-images.githubusercontent.com/17829232/188835902-c50f41d1-5e3d-4d4c-a49a-e75b81480b75.png">
+<img width="191" alt="card" src="https://user-images.githubusercontent.com/17829232/205496647-59a35cce-4976-423d-9568-d23f4cea91fc.png">
 
 * For recurring payment use:
 
@@ -148,7 +148,7 @@ start3DSecureTokenizedCardPayment(
 )
 ```
 
-<img width="197" alt="rec 3ds" src="https://user-images.githubusercontent.com/17829232/188836295-d8d48978-a80f-40d3-bda3-439423fcdec0.png">
+<img width="197" alt="rec 3ds" src="https://user-images.githubusercontent.com/17829232/205496677-3e22a19e-84f4-4200-8c0d-25b9d153b862.png">
 
 * For recurring payment with the ability to let SDK save Cards on your behalf and show sheet of
   saved cards for user to choose from. use:
@@ -162,7 +162,7 @@ startPaymentWithSavedCards(
 )
 ```
 
-<img width="197" alt="rec 3ds" src="https://user-images.githubusercontent.com/17829232/188843928-46f801d4-4dbc-4db6-a982-5297127752a6.jpeg">
+<img width="197" alt="rec 3ds" src="https://user-images.githubusercontent.com/17829232/205496703-b823e57b-348c-4109-9429-ab261e5a5b50.png">
 
 Pay now (in Java)
 --------
