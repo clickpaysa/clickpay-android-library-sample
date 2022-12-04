@@ -399,3 +399,17 @@ configurations.all {
 
 1- Please configure the IPN to avoid loosing any of the transaction status.
 
+
+## License
+
+See [LICENSE][license].
+
+## ClickPay
+
+[Support][1] | [Terms of Use][2] | [Privacy Policy][3]
+
+ [1]: https://clickpay.freshdesk.com/en/support/solutions
+ [2]: https://clickpay.com.sa/wps/portal/clickPay/clickpay/footerpages/termsandconditions
+ [3]: https://clickpay.com.sa/wps/portal/clickPay/clickpay/footerpages/privacy
+ [license]: https://github.com/clickpaysa/clickpay-ios-library-sample/blob/main/LICENSE
+
