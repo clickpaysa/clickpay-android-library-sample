@@ -393,7 +393,7 @@ configurations.all {
 
 ## See the common issues from here
 
-[common issues](https://github.com/clickpaysa/clickpay-android-library-sample/blob/master/common_issues.md)
+[common issues](https://github.com/clickpaysa/clickpay-android-library-sample/blob/main/common_issues.md)
 
 ## Notes
 
