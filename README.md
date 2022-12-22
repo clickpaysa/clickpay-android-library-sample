@@ -92,7 +92,7 @@ or
 startSamsungPayment(this, configData, "samsungpay token", callback = this)
 
 override fun onError(error: PaymentSdkError) {
-    Log.d(TAG_PAYTABS, "onError: $error")
+    Log.d(TAG, "onError: $error")
     Toast.makeText(this, "${error.msg}", Toast.LENGTH_SHORT).show()
 }
 
@@ -102,13 +102,13 @@ override fun onPaymentFinish(PaymentSdkTransactionDetails: PaymentSdkTransaction
         "${paymentSdkTransactionDetails.paymentResult?.responseMessage}",
         Toast.LENGTH_SHORT
     ).show()
-    Log.d(TAG_PAYTABS, "onPaymentFinish: $paymentSdkTransactionDetails")
+    Log.d(TAG, "onPaymentFinish: $paymentSdkTransactionDetails")
 
 }
 
 override fun onPaymentCancel() {
     Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show()
-    Log.d(TAG_PAYTABS, "onPaymentCancel:")
+    Log.d(TAG, "onPaymentCancel:")
 
 }
 
@@ -122,7 +122,7 @@ override fun onPaymentCancel() {
 startCardPayment(context = this, ptConfigData = configData, callback = this)
 ```
 
-<img width="191" alt="card" src="https://user-images.githubusercontent.com/17829232/188835902-c50f41d1-5e3d-4d4c-a49a-e75b81480b75.png">
+<img width="191" alt="card" src="https://user-images.githubusercontent.com/17829232/205496647-59a35cce-4976-423d-9568-d23f4cea91fc.png">
 
 * For recurring payment use:
 
@@ -148,7 +148,7 @@ start3DSecureTokenizedCardPayment(
 )
 ```
 
-<img width="197" alt="rec 3ds" src="https://user-images.githubusercontent.com/17829232/188836295-d8d48978-a80f-40d3-bda3-439423fcdec0.png">
+<img width="197" alt="rec 3ds" src="https://user-images.githubusercontent.com/17829232/205496677-3e22a19e-84f4-4200-8c0d-25b9d153b862.png">
 
 * For recurring payment with the ability to let SDK save Cards on your behalf and show sheet of
   saved cards for user to choose from. use:
@@ -162,7 +162,7 @@ startPaymentWithSavedCards(
 )
 ```
 
-<img width="197" alt="rec 3ds" src="https://user-images.githubusercontent.com/17829232/188843928-46f801d4-4dbc-4db6-a982-5297127752a6.jpeg">
+<img width="197" alt="rec 3ds" src="https://user-images.githubusercontent.com/17829232/205496703-b823e57b-348c-4109-9429-ab261e5a5b50.png">
 
 ## Query transaction
 
@@ -328,7 +328,7 @@ To enable tokenisation please follow the below instructions
 
 1. To enable pay with samsungpay you need first to integrate with SamsungPay api. Here how you can
    integrate with SamsungPay Api.
-   [SamsungPay Integration Guide](https://github.com/paytabscom/paytabs-android-library-sample/blob/master/samsung_pay.md)
+   [SamsungPay Integration Guide](https://github.com/clickpaysa/clickpay-android-library-sample/blob/master/samsung_pay.md)
    .
 
 2. Pass the returned json token from samsung pay to the following method.
@@ -374,8 +374,8 @@ to the payment configuration.
 ## Override strings
 
 To override string you can find the keys with the default values here
-![english]( https://github.com/paytabscom/paytabs-android-library-sample/blob/master/res/strings.xml)
-![arabic](https://github.com/paytabscom/paytabs-android-library-sample/blob/master/res/strings-ar.xml)
+[english]( https://github.com/clickpaysa/clickpay-android-library-sample/blob/master/res/strings.xml)
+[arabic](https://github.com/clickpaysa/clickpay-android-library-sample/blob/master/res/strings-ar.xml)
 
 ````xml
 
@@ -419,21 +419,23 @@ configurations.all {
 
 ## See the common issues from here
 
-[common issues](https://github.com/paytabscom/paytabs-android-library-sample/blob/master/common_issues.md)
+[common issues](https://github.com/clickpaysa/clickpay-android-library-sample/blob/main/common_issues.md)
 
 ## Notes
 
 1- Please configure the IPN to avoid loosing any of the transaction status.
 
-PaymentSdk
---------
-[Support][2] | [Terms of Use][3] | [Privacy Policy][4]
 
+## License
 
-[1]: https://dev.paytabs.com/docs/android/
+See [LICENSE][license].
 
-[2]: https://support.paytabs.com
+## ClickPay
 
-[3]: https://www.paytabs.com/en/terms-of-use/
+[Support][1] | [Terms of Use][2] | [Privacy Policy][3]
 
-[4]: https://www.paytabs.com/en/privacy-policy/
+ [1]: https://clickpay.freshdesk.com/en/support/solutions
+ [2]: https://clickpay.com.sa/wps/portal/clickPay/clickpay/footerpages/termsandconditions
+ [3]: https://clickpay.com.sa/wps/portal/clickPay/clickpay/footerpages/privacy
+ [license]: https://github.com/clickpaysa/clickpay-ios-library-sample/blob/main/LICENSE
+
