@@ -12,4 +12,5 @@
     <string name="select_trans_type">select transaction type</string>
     <string name="apm_pay">Pay with APMS</string>
     <string name="clickpay">ClickPay</string>
+    <string name="query_transaction">Query transaction</string>
 </resources>

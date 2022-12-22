@@ -6,14 +6,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.khairy.pt2sampleapp.databinding.ActivityMainBinding
 import com.payment.paymentsdk.PaymentSdkActivity.Companion.startAlternativePaymentMethods
-import com.payment.paymentsdk.PaymentSdkActivity.Companion.startPaymentWithSavedCards
+import com.payment.paymentsdk.PaymentSdkActivity.Companion.startCardPayment
 import com.payment.paymentsdk.PaymentSdkConfigBuilder
+import com.payment.paymentsdk.QuerySdkActivity
 import com.payment.paymentsdk.integrationmodels.*
 import com.payment.paymentsdk.sharedclasses.interfaces.CallbackPaymentInterface
+import com.payment.paymentsdk.sharedclasses.interfaces.CallbackQueryInterface
+import com.payment.paymentsdk.sharedclasses.model.response.TransactionResponseBody
 import com.paytabs.samsungpay.sample.SamsungPayActivity
 
 private const val TAG = "MainActivity"
-class MainActivity : AppCompatActivity(), CallbackPaymentInterface {
+
+class MainActivity : AppCompatActivity(), CallbackPaymentInterface, CallbackQueryInterface {
     private var token: String? = null
     private var transRef: String? = null
     private lateinit var b: ActivityMainBinding
@@ -25,11 +29,11 @@ class MainActivity : AppCompatActivity(), CallbackPaymentInterface {
         setContentView(view)
         b.pay.setOnClickListener {
             val configData = generatePaytabsConfigurationDetails()
-//            startCardPayment(
-//                this,
-//                configData,
-//                this
-//            )
+            startCardPayment(
+                this,
+                configData,
+                this
+            )
 //            start3DSecureTokenizedCardPayment(
 //                this,
 //                configData,
@@ -49,12 +53,12 @@ class MainActivity : AppCompatActivity(), CallbackPaymentInterface {
             )
             *
             * */
-            startPaymentWithSavedCards(
-                this,
-                configData,
-                false,
-                this
-            )
+//            startPaymentWithSavedCards(
+//                this,
+//                configData,
+//                false,
+//                this
+//            )
         }
         b.stcPay.setOnClickListener {
             val configData = generatePaytabsConfigurationDetails(PaymentSdkApms.STC_PAY)
@@ -64,16 +68,29 @@ class MainActivity : AppCompatActivity(), CallbackPaymentInterface {
         b.samPay.setOnClickListener {
             SamsungPayActivity.start(this, generatePaytabsConfigurationDetails())
         }
+        b.queryFunction.setOnClickListener {
+            QuerySdkActivity.queryTransaction(
+                this,
+                PaymentSDKQueryConfiguration(
+                    "ServerKey",
+                    "ClientKey",
+                    "Country Iso 2",
+                    "Profile Id",
+                    "Transaction Reference"
+                ),
+                this
+            )
 
+        }
 
 
     }
 
 
     private fun generatePaytabsConfigurationDetails(selectedApm: PaymentSdkApms? = null): PaymentSdkConfigurationDetails {
-        val profileId = "****"
-        val serverKey = "*********"
-        val clientKey = "*********"
+        val profileId = "**********"
+        val serverKey = "**********"
+        val clientKey = "**********"
         val locale = PaymentSdkLanguageCode.EN /*Or PaymentSdkLanguageCode.AR*/
         val transactionTitle = "Test SDK"
         val orderId = "123456"
@@ -123,8 +140,16 @@ class MainActivity : AppCompatActivity(), CallbackPaymentInterface {
         return configData.build()
     }
 
+    override fun onCancel() {
+        TODO("Not yet implemented")
+    }
+
     override fun onError(error: PaymentSdkError) {
         Toast.makeText(this, "${error.msg}", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onResult(transactionResponseBody: TransactionResponseBody) {
+        TODO("Not yet implemented")
     }
 
     override fun onPaymentCancel() {

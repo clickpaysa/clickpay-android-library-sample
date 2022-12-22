@@ -13,7 +13,7 @@ Clickpay android library sample
 You have to include the following dependencies:
 
 ```
-    implementation 'sa.com.clickpay:payment-sdk:6.3.0'
+    implementation 'sa.com.clickpay:payment-sdk:6.3.2'
 ```
 
 Proguard
@@ -163,6 +163,32 @@ startPaymentWithSavedCards(
 ```
 
 <img width="197" alt="rec 3ds" src="https://user-images.githubusercontent.com/17829232/188843928-46f801d4-4dbc-4db6-a982-5297127752a6.jpeg">
+
+## Query transaction
+
+You can check the status of a transaction
+
+1- first create PaymentSDKQueryConfiguration
+
+```Kotlin
+val queryConfig = PaymentSDKQueryConfiguration(
+    "ServerKey",
+    "ClientKey",
+    "Country Iso 2",
+    "Profile Id",
+    "Transaction Reference"
+)
+```
+
+2- Call QuerySdkActivity.queryTransaction and pass the needed arguments
+
+```Kotlin
+QuerySdkActivity.queryTransaction(
+    this,
+    queryConfig,
+    this
+)
+```
 
 Pay now (in Java)
 --------
