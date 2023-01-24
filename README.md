@@ -13,7 +13,7 @@ Clickpay android library sample
 You have to include the following dependencies:
 
 ```
-    implementation 'sa.com.clickpay:payment-sdk:6.3.2'
+    implementation 'sa.com.clickpay:payment-sdk:6.3.4'
 ```
 
 Proguard
