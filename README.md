@@ -3,8 +3,8 @@ Clickpay android library sample
 
 ## Requirements
 
-- compileSdkVersion 31
-- targetSdkVersion 31 Library requires at minimum Java 7 or Android 5.1.
+- compileSdkVersion 33
+- targetSdkVersion 36 Library requires at minimum Java 8 or Android 5.1.
 
 --------
 
@@ -13,7 +13,7 @@ Clickpay android library sample
 You have to include the following dependencies:
 
 ```
-    implementation 'sa.com.clickpay:payment-sdk:6.3.5'
+    implementation 'sa.com.clickpay:payment-sdk:6.5.0'
 ```
 
 Proguard
