@@ -18,21 +18,20 @@ import com.paytabs.samsungpay.sample.SamsungPayActivity
 private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity(), CallbackPaymentInterface, CallbackQueryInterface {
+
     private var token: String? = null
     private var transRef: String? = null
-    private lateinit var b: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        b = ActivityMainBinding.inflate(layoutInflater)
-        val view = b.root
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
         setContentView(view)
-        b.pay.setOnClickListener {
-            val configData = generatePaytabsConfigurationDetails()
+        binding.pay.setOnClickListener {
+            val configData = generateConfigurationDetails()
             startCardPayment(
-                this,
-                configData,
-                this
+                this, configData, this
             )
 //            start3DSecureTokenizedCardPayment(
 //                this,
@@ -60,34 +59,23 @@ class MainActivity : AppCompatActivity(), CallbackPaymentInterface, CallbackQuer
 //                this
 //            )
         }
-        b.stcPay.setOnClickListener {
-            val configData = generatePaytabsConfigurationDetails(PaymentSdkApms.STC_PAY)
+        binding.stcPay.setOnClickListener {
+            val configData = generateConfigurationDetails(PaymentSdkApms.STC_PAY)
             startAlternativePaymentMethods(this, configData, this)
         }
-
-        b.samPay.setOnClickListener {
-            SamsungPayActivity.start(this, generatePaytabsConfigurationDetails())
+        binding.samPay.setOnClickListener {
+            SamsungPayActivity.start(this, generateConfigurationDetails())
         }
-        b.queryFunction.setOnClickListener {
+        binding.queryFunction.setOnClickListener {
             QuerySdkActivity.queryTransaction(
-                this,
-                PaymentSDKQueryConfiguration(
-                    "ServerKey",
-                    "ClientKey",
-                    "Country Iso 2",
-                    "Profile Id",
-                    "Transaction Reference"
-                ),
-                this
+                this, PaymentSDKQueryConfiguration(
+                    "ServerKey", "ClientKey", "Country Iso 2", "Profile Id", "Transaction Reference"
+                ), this
             )
-
         }
-
-
     }
 
-
-    private fun generatePaytabsConfigurationDetails(selectedApm: PaymentSdkApms? = null): PaymentSdkConfigurationDetails {
+    private fun generateConfigurationDetails(selectedApm: PaymentSdkApms? = null): PaymentSdkConfigurationDetails {
         val profileId = "**********"
         val serverKey = "**********"
         val clientKey = "**********"
@@ -103,45 +91,31 @@ class MainActivity : AppCompatActivity(), CallbackPaymentInterface, CallbackQuer
             "SA",
             "email1@domain.com",
             "name name",
-            "+966568595106", "121321",
-            "address street", ""
+            "+966568595106",
+            "121321",
+            "address street",
+            ""
         )
         val shippingData = PaymentSdkShippingDetails(
-            "City",
-            "SA",
-            "test@test.com",
-            "name1 last1",
-            "+966568595106", "3510",
-            "street2", ""
+            "City", "SA", "test@test.com", "name1 last1", "+966568595106", "3510", "street2", ""
         )
         val configData = PaymentSdkConfigBuilder(
-            profileId,
-            serverKey,
-            clientKey, amount, currency
-        )
-            .setCartDescription(cartDesc)
-            .setLanguageCode(locale)
-            .setBillingData(billingData)
+            profileId, serverKey, clientKey, amount, currency
+        ).setCartDescription(cartDesc).setLanguageCode(locale).setBillingData(billingData)
             .setMerchantCountryCode(merchantCountryCode)
             .setTransactionType(PaymentSdkTransactionType.SALE)
-            .setTransactionClass(PaymentSdkTransactionClass.ECOM)
-            .setShippingData(shippingData)
+            .setTransactionClass(PaymentSdkTransactionClass.ECOM).setShippingData(shippingData)
             .setTokenise(PaymentSdkTokenise.NONE) //Check other tokenizing types in PaymentSdkTokenise
-            .setCartId(orderId)
-            .showBillingInfo(false)
-            .showShippingInfo(false)
-            .forceShippingInfo(false)
-            .setScreenTitle(transactionTitle)
+            .setCartId(orderId).showBillingInfo(false).showShippingInfo(false)
+            .forceShippingInfo(false).setScreenTitle(transactionTitle)
 
-        if (selectedApm != null)
-            configData.setAlternativePaymentMethods(listOf(selectedApm))
-        /*Check PaymentSdkApms for more payment options*/
+        if (selectedApm != null) configData.setAlternativePaymentMethods(listOf(selectedApm))/*Check PaymentSdkApms for more payment options*/
 
         return configData.build()
     }
 
     override fun onCancel() {
-        TODO("Not yet implemented")
+        Toast.makeText(this, "onCancel", Toast.LENGTH_SHORT).show()
     }
 
     override fun onError(error: PaymentSdkError) {
@@ -149,12 +123,12 @@ class MainActivity : AppCompatActivity(), CallbackPaymentInterface, CallbackQuer
     }
 
     override fun onResult(transactionResponseBody: TransactionResponseBody) {
-        TODO("Not yet implemented")
+        Log.d(TAG, "onResult: $transactionResponseBody")
+        Toast.makeText(this, "onResult: $transactionResponseBody", Toast.LENGTH_SHORT).show()
     }
 
     override fun onPaymentCancel() {
         Toast.makeText(this, "onPaymentCancel", Toast.LENGTH_SHORT).show()
-
     }
 
     override fun onPaymentFinish(paymentSdkTransactionDetails: PaymentSdkTransactionDetails) {
@@ -166,4 +140,5 @@ class MainActivity : AppCompatActivity(), CallbackPaymentInterface, CallbackQuer
             paymentSdkTransactionDetails.paymentResult?.responseMessage ?: "PaymentFinish",
             Toast.LENGTH_SHORT
         ).show()
-    }}
+    }
+}

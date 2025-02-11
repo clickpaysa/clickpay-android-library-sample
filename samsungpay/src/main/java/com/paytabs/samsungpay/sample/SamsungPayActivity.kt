@@ -24,10 +24,8 @@ import java.util.*
 
 class SamsungPayActivity : Activity(), PaymentManager.CustomSheetTransactionInfoListener,
     CallbackPaymentInterface {
-    private val TAG = "SampleMerchantActivity"
-    private val AMOUNT_CONTROL_ID = "amount_control_id"
-    private var paymentManager: PaymentManager? = null
 
+    private var paymentManager: PaymentManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,15 +35,10 @@ class SamsungPayActivity : Activity(), PaymentManager.CustomSheetTransactionInfo
         brandList.add(SpaySdk.Brand.MASTERCARD)
         val customSheet = CustomSheet()
         customSheet.addControl(makeAmountControl())
-        val customSheetPaymentInfo = CustomSheetPaymentInfo.Builder()
-            .setMerchantId("123456")
-            .setMerchantName("Sample Merchant")
-            .setOrderNumber("12345566")
-            .setAllowedCardBrands(brandList)
-            .setCardHolderNameEnabled(true)
-            .setRecurringEnabled(false)
-            .setCustomSheet(customSheet)
-            .build()
+        val customSheetPaymentInfo = CustomSheetPaymentInfo.Builder().setMerchantId("123456")
+            .setMerchantName("Sample Merchant").setOrderNumber("12345566")
+            .setAllowedCardBrands(brandList).setCardHolderNameEnabled(true)
+            .setRecurringEnabled(false).setCustomSheet(customSheet).build()
 
         startSamsungPayment(customSheetPaymentInfo)
 
@@ -55,8 +48,7 @@ class SamsungPayActivity : Activity(), PaymentManager.CustomSheetTransactionInfo
         try {
             val bundle = Bundle()
             bundle.putString(
-                SamsungPay.PARTNER_SERVICE_TYPE,
-                SpaySdk.ServiceType.INAPP_PAYMENT.toString()
+                SamsungPay.PARTNER_SERVICE_TYPE, SpaySdk.ServiceType.INAPP_PAYMENT.toString()
             )
             val partnerInfo = PartnerInfo(getString(R.string.gradle_product_id), bundle)
             paymentManager = PaymentManager(this, partnerInfo)
@@ -77,11 +69,8 @@ class SamsungPayActivity : Activity(), PaymentManager.CustomSheetTransactionInfo
         } catch (e: IllegalArgumentException) {
             e.printStackTrace()
             Toast.makeText(
-                this@SamsungPayActivity,
-                "Fail  ${e.localizedMessage}",
-                Toast.LENGTH_LONG
-            )
-                .show()
+                this@SamsungPayActivity, "Fail  ${e.localizedMessage}", Toast.LENGTH_LONG
+            ).show()
             Log.e(TAG, e.toString())
             finish()
 
@@ -103,52 +92,45 @@ class SamsungPayActivity : Activity(), PaymentManager.CustomSheetTransactionInfo
     }
 
     override fun onSuccess(
-        customSheetPaymentInfo: CustomSheetPaymentInfo?,
-        s: String?,
-        bundle: Bundle?
+        customSheetPaymentInfo: CustomSheetPaymentInfo?, token: String, bundle: Bundle
     ) {
         Toast.makeText(this@SamsungPayActivity, "Success", Toast.LENGTH_LONG).show()
-        Toast.makeText(this@SamsungPayActivity, s, Toast.LENGTH_LONG).show()
-        bundle?.keySet()?.forEach {
-            Log.d(TAG, it + " : " + bundle[it])
-            Toast.makeText(this@SamsungPayActivity, it + " : " + bundle[it], Toast.LENGTH_LONG)
-                .show()
+        Toast.makeText(this@SamsungPayActivity, token, Toast.LENGTH_LONG).show()
+        bundle.keySet()?.forEach {
+            Log.d(TAG, it + " : " + bundle.getString(it))
+            Toast.makeText(
+                this@SamsungPayActivity, it + " : " + bundle.getString(it), Toast.LENGTH_LONG
+            ).show()
         }
-        Log.d(TAG, s!!)
-        startPaymentProcess(s, customSheetPaymentInfo?.merchantName ?: "mo khairy")
+        Log.d(TAG, token)
+        startPaymentProcess(token)
     }
 
     override fun onFailure(i: Int, bundle: Bundle) {
         Toast.makeText(this@SamsungPayActivity, "Fail $i", Toast.LENGTH_LONG).show()
         Log.e(TAG, "$i ")
         for (key in bundle.keySet()) {
-            Log.d(TAG, key + " : " + bundle[key])
-            Toast.makeText(this@SamsungPayActivity, key + " : " + bundle[key], Toast.LENGTH_LONG)
-                .show()
+            Log.d(TAG, key + " : " + bundle.getString(key))
+            Toast.makeText(
+                this@SamsungPayActivity, key + " : " + bundle.getString(key), Toast.LENGTH_LONG
+            ).show()
         }
         finish()
 
     }
 
-    private fun makeAmountControl(): AmountBoxControl? {
+    private fun makeAmountControl(): AmountBoxControl {
         val amountBoxControl = AmountBoxControl(AMOUNT_CONTROL_ID, "AED")
         amountBoxControl.setAmountTotal(1.0, AmountConstants.FORMAT_TOTAL_PRICE_ONLY)
         return amountBoxControl
     }
 
-    private fun startPaymentProcess(samPaytoken: String, customerName: String) {
+    @Suppress("DEPRECATION")
+    private fun startPaymentProcess(samPayToken: String) {
         val ptConfig = intent.getParcelableExtra<PaymentSdkConfigurationDetails>("ptConfig")
-        PaymentSdkActivity.startSamsungPayment(this, ptConfig!!, samPaytoken, this)
+        PaymentSdkActivity.startSamsungPayment(this, ptConfig!!, samPayToken, this)
     }
 
-    companion object {
-        fun start(activity: Activity, configurationDetails: PaymentSdkConfigurationDetails) {
-            val intent = Intent(activity, SamsungPayActivity::class.java).apply {
-                putExtra("ptConfig", configurationDetails)
-            }
-            activity.startActivity(intent)
-        }
-    }
 
     override fun onError(error: PaymentSdkError) {
         Toast.makeText(this, "${error.msg}", Toast.LENGTH_SHORT).show()
@@ -157,15 +139,26 @@ class SamsungPayActivity : Activity(), PaymentManager.CustomSheetTransactionInfo
 
     override fun onPaymentCancel() {
         Toast.makeText(this, "Payment cancelled", Toast.LENGTH_SHORT).show()
-         finish()
+        finish()
     }
 
-    override fun onPaymentFinish(payTabsTransactionDetails: PaymentSdkTransactionDetails) {
+    override fun onPaymentFinish(paymentSdkTransactionDetails: PaymentSdkTransactionDetails) {
         Toast.makeText(
             this,
-            "${payTabsTransactionDetails.paymentResult?.responseMessage}",
+            "${paymentSdkTransactionDetails.paymentResult?.responseMessage}",
             Toast.LENGTH_SHORT
         ).show()
         finish()
+    }
+
+    companion object {
+        private const val TAG = "SampleMerchantActivity"
+        private const val AMOUNT_CONTROL_ID = "amount_control_id"
+        fun start(activity: Activity, configurationDetails: PaymentSdkConfigurationDetails) {
+            val intent = Intent(activity, SamsungPayActivity::class.java).apply {
+                putExtra("ptConfig", configurationDetails)
+            }
+            activity.startActivity(intent)
+        }
     }
 }

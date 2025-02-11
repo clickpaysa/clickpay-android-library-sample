@@ -3,8 +3,8 @@ Clickpay android library sample
 
 ## Requirements
 
-- compileSdkVersion 33
-- targetSdkVersion 36 Library requires at minimum Java 8 or Android 5.1.
+- compileSdkVersion 35
+- targetSdkVersion 35 Library requires at minimum Java 8 or Android 5.1.
 
 --------
 
@@ -13,7 +13,7 @@ Clickpay android library sample
 You have to include the following dependencies:
 
 ```
-    implementation 'sa.com.clickpay:payment-sdk:6.6.5'
+    implementation 'sa.com.clickpay:payment-sdk:6.7.1'
 ```
 
 Proguard
@@ -301,17 +301,6 @@ PaymentSdkActivity.start3DSecureTokenizedCardPayment(
         this);
 ```
 
-* For recurring payment with the ability to let SDK save Cards on your behalf and show sheet of
-  saved cards for user to choose from. use:
-
-```Java
-PaymentSdkActivity.startPaymentWithSavedCards(
-        this,
-        configData,
-        true,
-        this);
-```
-
 ## Tokenisation
 
 To enable tokenisation please follow the below instructions
@@ -355,58 +344,127 @@ Valu, Fawry, UnionPay, and Meeza, to serve a large sector of customers.
 PaymentSdkActivity.startAlternativePaymentMethods(context, configuration, callback)
 ```
 
-## Overriding Resources:
+## Card Approval
 
-to override fonts Please add your custom fonts files with these names
+The Payment SDK allows you to customize BIN-based discounts through the `PaymentSdkCardApproval`
+class, which collects approval details via an API.
 
-payment_sdk_primary_font.tff && payment_sdk_secondary_font.tff
+### Example Usage
 
-to override strings, colors or dimens add the resource you need to override from below resources
-with the value you want
+```kotlin
+val cardApproval = PaymentSdkCardApproval(
+    validationUrl = "Your validation URL. Ex: https://yourdomain.com/validate",
+    binLength = 8,
+    blockIfNoResponse = false
+)
 
-## Theme
+val configData = PaymentSdkConfigBuilder(profileId, serverKey, clientKey, amount ?: 0.0, currency)
+    .setCardApproval(cardApproval)
+    .build()
+```
 
-Use the following guide to customize the colors, font, and logo by configuring the theme and pass it
-to the payment configuration.
+- **`validationUrl`**: The endpoint provided by the business where the Payment SDK will pass
+  transaction information and receive a response.
+- **`binLength`**: The length of the BIN (default is 6 digits, can be set to 8).
+- **`blockIfNoResponse`**: Determines whether to block the transaction if there is no response from
+  the validation endpoint.
 
-![UI guide](https://user-images.githubusercontent.com/95287975/160391259-97aaff10-cb9f-4103-bc3e-a938a1111128.png)
+## Card Discount
 
-## Override strings
+To apply a discount on a card payment, use the following method:
 
-To override string you can find the keys with the default values here
-[english]( https://github.com/clickpaysa/clickpay-android-library-sample/blob/master/res/strings.xml)
-[arabic](https://github.com/clickpaysa/clickpay-android-library-sample/blob/master/res/strings-ar.xml)
+```kotlin
+// List of card discounts
+val cardDiscount = listOf(
+    PaymentSdkCardDiscount(
+        // List of card prefixes from 4 to 10 digits
+        listOf("40001"),
+        // Discount percentage or value
+        10.0,
+        // Discount description
+        "● 10% discount on VISA cards starting with 40001",
+        // Discount type: percentage or value
+        true
+    )
+)
+...setCardDiscount(cardDiscount)
+```
 
-````xml
-<resourse>
-    // to override colors
-    <color name="payment_sdk_primary_color">#000000</color>
-    <color name="payment_sdk_secondary_color">#1B1B1B</color>
-    <color name="payment_sdk_background_color">#292929</color>
-    <color name="payment_sdk_button_background_color">#45444A</color>
-    <color name="payment_sdk_input_field_background_color">#8E8E8D</color>
-    <color name="payment_sdk_stroke_color">#90918F</color>
+## Overriding Resources
 
-    <color name="payment_sdk_title_text_color">#FFFFFF</color>
-    <color name="payment_sdk_primary_font_color">#FFFFFF</color>
-    <color name="payment_sdk_secondary_font_color">#0094F1</color>
-    <color name="payment_sdk_button_text_color">#FFF</color>
-    <color name="payment_sdk_hint_font_color">#D8D8D8</color>
-    <color name="payment_sdk_error_text_color">#650303</color>
+### Overriding Fonts
 
-    <color name="payment_sdk_back_black_dim">#4D6E6E6E</color>
+Add your custom font files with the following names:
+
+- `payment_sdk_primary_font.tff`
+- `payment_sdk_secondary_font.tff`
+
+### Overriding Strings, Colors, or Dimens
+
+To override strings, colors, or dimens, add the resource you need to override from the resources
+below:
+
+![UI guide](theme_demo.png)
+
+#### Example of Overriding Colors and Dimens:
+
+```xml
+
+<resources>
+    <!-- Override colors -->
+    <color name="payment_sdk_primary_color">#ffffff</color>
+    <color name="payment_sdk_secondary_color">#0073bc</color>
     <color name="payment_sdk_status_bar_color">#444647</color>
+    <color name="payment_sdk_primary_font_color">#4c4c4c</color>
+    <color name="payment_sdk_secondary_font_color">#0073bc</color>
+    <color name="payment_sdk_hint_font_color">#a5a5a5</color>
+    <color name="payment_sdk_stroke_color">#e1e1e1</color>
+    <color name="payment_sdk_button_text_color">#FFF</color>
+    <color name="payment_sdk_title_text_color">#1e1e1e</color>
+    <color name="payment_sdk_button_background_color">#0073bc</color>
+    <color name="payment_sdk_background_color">#F9FAFD</color>
+    <color name="payment_sdk_blue_F2FAFD">#F2FAFD</color>
+    <color name="payment_sdk_error_text_color">#EC2213</color>
+    <color name="payment_sdk_back_black_dim">#4D6E6E6E</color>
+    <color name="payment_sdk_input_field_background_color">#FFFFFFFF</color>
+    <color name="payment_sdk_enabled_switch_track_color">#00000000</color>
+    <color name="payment_sdk_enabled_switch_handle_color">#3db39e</color>
+    <color name="payment_sdk_disabled_switch_track_color">#00000000</color>
+    <color name="payment_sdk_disabled_switch_handle_color">#c7c7c7</color>
+    <color name="payment_sdk_switch_stroke_color">#4c4c4c</color>
+    <color name="payment_sdk_amount_font_color">#4c4c4c</color>
+    <color name="payment_sdk_original_amount_font_color">#a5a5a5</color>
+    <color name="payment_sdk_billing_header_background_color">#0073bc</color>
+    <color name="payment_sdk_billing_text_color">#FFF</color>
 
-    // to override dimens
-    <dimen name="payment_sdk_primary_font_size">17sp</dimen>
-    <dimen name="payment_sdk_secondary_font_size">15sp</dimen>
+    <!-- Override dimens -->
+    <dimen name="payment_sdk_title_font_size">18sp</dimen>
+    <dimen name="payment_sdk_title_margin">24dp</dimen>
+    <dimen name="payment_sdk_primary_font_size">16sp</dimen>
+    <dimen name="payment_sdk_secondary_font_size">16sp</dimen>
+    <dimen name="payment_sdk_button_font_size">16sp</dimen>
     <dimen name="payment_sdk_separator_thickness">1dp</dimen>
     <dimen name="payment_sdk_stroke_thickness">.5dp</dimen>
     <dimen name="payment_sdk_input_corner_radius">8dp</dimen>
+    <dimen name="payment_sdk_card_corner_radius">8dp</dimen>
+    <dimen name="payment_sdk_card_margin">16dp</dimen>
+    <dimen name="payment_sdk_billing_header_corner_radius">0dp</dimen>
+    <dimen name="payment_sdk_billing_header_margin">0dp</dimen>
     <dimen name="payment_sdk_button_corner_radius">8dp</dimen>
+    <dimen name="payment_sdk_error_font_size">12sp</dimen>
+    <dimen name="payment_sdk_amount_font_size">16sp</dimen>
 
-</resourse>
-````
+    <!-- Override styles -->
+    <style name="PaymentSdkTheme" parent="Theme.MaterialComponents.NoActionBar">
+        <!-- Hides the payment screen title background -->
+        <item name="payment_sdk_hideScreenTitleBackground">true</item>
+        <!-- Sets the alignment of the payment screen title [start-end-center] -->
+        <item name="payment_sdk_screenTitleAlignment">start</item>
+        <!-- Hides the card and button shadows -->
+        <item name="payment_sdk_hideViewsShadow">true</item>
+    </style>
+</resources>
+```
 
 ## Known Coroutine issue
 
