@@ -477,7 +477,6 @@ You can find the keys with the default values here:
 - [French Strings](https://github.com/clickpaysa/clickpay-android-library-sample/blob/master/res/strings-fr.xml)
 - [Turkish Strings](https://github.com/clickpaysa/clickpay-android-library-sample/blob/master/res/strings-tr.xml)
 - [Urdu Strings](https://github.com/clickpaysa/clickpay-android-library-sample/blob/master/res/strings-ur.xml)
--
 
 ## Known Coroutine issue
 
