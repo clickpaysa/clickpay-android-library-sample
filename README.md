@@ -23,7 +23,7 @@ If you are using ProGuard you might need to exclude the library classes.
 ```java
 -keep
 
-public class com.payment.paymentsdk.**{*}
+public class com.payment.paymentsdk .**{*}
 ```
 
 Pay now (in Kotlin)
@@ -150,20 +150,6 @@ start3DSecureTokenizedCardPayment(
 
 <img width="197" alt="rec 3ds" src="https://user-images.githubusercontent.com/17829232/205496677-3e22a19e-84f4-4200-8c0d-25b9d153b862.png">
 
-* For recurring payment with the ability to let SDK save Cards on your behalf and show sheet of
-  saved cards for user to choose from. use:
-
-```Kotlin
-startPaymentWithSavedCards(
-    context = this,
-    ptConfigData = configData,
-    support3DS = true,
-    callback = this
-)
-```
-
-<img width="197" alt="rec 3ds" src="https://user-images.githubusercontent.com/17829232/205496703-b823e57b-348c-4109-9429-ab261e5a5b50.png">
-
 ## Query transaction
 
 You can check the status of a transaction
@@ -194,50 +180,64 @@ Pay now (in Java)
 --------
 
 ```java
-String profileId="PROFILE_ID";
-        String serverKey="SERVER_KEY";
-        String clientKey="CLIENT_KEY";
-        PaymentSdkLanguageCode locale=PaymentSdkLanguageCode.EN;
-        String screenTitle="Test SDK";
-        String cartId="123456";
-        String cartDesc="cart description";
-        String currency="AED";
-        double amount=20.0;
+String profileId = "PROFILE_ID";
+String serverKey = "SERVER_KEY";
+String clientKey = "CLIENT_KEY";
+PaymentSdkLanguageCode locale = PaymentSdkLanguageCode.EN;
+String screenTitle = "Test SDK";
+String cartId = "123456";
+String cartDesc = "cart description";
+String currency = "AED";
+double amount = 20.0;
 
-        PaymentSdkTokenise tokeniseType=PaymentSdkTokenise.NONE; // tokenise is off
-        or PaymentSdkTokenise.USER_OPTIONAL // tokenise if optional as per user approval
-        or PaymentSdkTokenise.USER_MANDATORY // tokenise is forced as per user approval
-        or PaymentSdkTokenise.MERCHANT_MANDATORY // tokenise is forced without user approval
+PaymentSdkTokenise tokeniseType = PaymentSdkTokenise.NONE; // tokenise is off
+or PaymentSdkTokenise.USER_OPTIONAL // tokenise if optional as per user approval
+or PaymentSdkTokenise.USER_MANDATORY // tokenise is forced as per user approval
+or PaymentSdkTokenise.MERCHANT_MANDATORY // tokenise is forced without user approval
 
-        PaymentSdkTransactionType transType=PaymentSdkTransactionType.SALE;
-        or PaymentSdkTransactionType.AUTH
+PaymentSdkTransactionType transType = PaymentSdkTransactionType.SALE;
+or PaymentSdkTransactionType.AUTH
 
 
-        PaymentSdkTokenFormat tokenFormat=new PaymentSdkTokenFormat.Hex32Format();
-        or new PaymentSdkTokenFormat.NoneFormat()
-        or new PaymentSdkTokenFormat.AlphaNum20Format()
-        or new PaymentSdkTokenFormat.Digit22Format()
-        or new PaymentSdkTokenFormat.Digit16Format()
-        or new PaymentSdkTokenFormat.AlphaNum32Format()
+PaymentSdkTokenFormat tokenFormat = new PaymentSdkTokenFormat.Hex32Format();
+or new PaymentSdkTokenFormat.
 
-        PaymentSdkBillingDetails billingData=new PaymentSdkBillingDetails(
+NoneFormat()
+
+or new PaymentSdkTokenFormat.
+
+AlphaNum20Format()
+
+or new PaymentSdkTokenFormat.
+
+Digit22Format()
+
+or new PaymentSdkTokenFormat.
+
+Digit16Format()
+
+or new PaymentSdkTokenFormat.
+
+AlphaNum32Format()
+
+PaymentSdkBillingDetails billingData = new PaymentSdkBillingDetails(
         "City",
         "2 digit iso Country code",
         "email1@domain.com",
         "name ",
-        "phone","state",
-        "address street","zip"
-        );
+        "phone", "state",
+        "address street", "zip"
+);
 
-        PaymentSdkShippingDetails shippingData=new PaymentSdkShippingDetails(
+PaymentSdkShippingDetails shippingData = new PaymentSdkShippingDetails(
         "City",
         "2 digit iso Country code",
         "email1@domain.com",
         "name ",
-        "phone","state",
-        "address street","zip"
-        );
-        PaymentSdkConfigurationDetails configData=new PaymentSdkConfigBuilder(profileId,serverKey,clientKey,amount,currency)
+        "phone", "state",
+        "address street", "zip"
+);
+PaymentSdkConfigurationDetails configData = new PaymentSdkConfigBuilder(profileId, serverKey, clientKey, amount, currency)
         .setCartDescription(cartDesc)
         .setLanguageCode(locale)
         .setBillingData(billingData)
@@ -250,22 +250,24 @@ String profileId="PROFILE_ID";
         .forceShippingInfo(true)
         .setScreenTitle(screenTitle)
         .build();
-        PaymentSdkActivity.startCardPayment(this,configData,this);
+        PaymentSdkActivity.
+
+startCardPayment(this,configData,this);
 
 @Override
-public void onError(@NotNull PaymentSdkError paymentSdkError){
+public void onError(@NotNull PaymentSdkError paymentSdkError) {
 
-        }
-
-@Override
-public void onPaymentCancel(){
-
-        }
+}
 
 @Override
-public void onPaymentFinish(@NotNull PaymentSdkTransactionDetails paymentSdkTransactionDetails){
+public void onPaymentCancel() {
 
-        }
+}
+
+@Override
+public void onPaymentFinish(@NotNull PaymentSdkTransactionDetails paymentSdkTransactionDetails) {
+
+}
 ```
 
 You are now ready to start payment
@@ -286,8 +288,8 @@ PaymentSdkActivity.startTokenizedCardPayment(
         this,
         configData,
         "Token",
-        "TransactionRef",
-        this);
+                "TransactionRef",
+                this);
 ```
 
 * For recurring payment with 3DS feature enabled (request CVV) use:
@@ -298,7 +300,7 @@ PaymentSdkActivity.start3DSecureTokenizedCardPayment(
         configData,
         new PaymentSDKSavedCardInfo("Masked card","Visa or MC or card type"),
         "Token",
-        this);
+                this);
 ```
 
 ## Tokenisation
@@ -466,6 +468,17 @@ below:
 </resources>
 ```
 
+### Overriding Strings
+
+You can find the keys with the default values here:
+
+- [English Strings](https://github.com/clickpaysa/clickpay-android-library-sample/blob/master/res/strings.xml)
+- [Arabic Strings](https://github.com/clickpaysa/clickpay-android-library-sample/blob/master/res/strings-ar.xml)
+- [French Strings](https://github.com/clickpaysa/clickpay-android-library-sample/blob/master/res/strings-fr.xml)
+- [Turkish Strings](https://github.com/clickpaysa/clickpay-android-library-sample/blob/master/res/strings-tr.xml)
+- [Urdu Strings](https://github.com/clickpaysa/clickpay-android-library-sample/blob/master/res/strings-ur.xml)
+-
+
 ## Known Coroutine issue
 
 Please in case you faced dependency conflict with the coroutine api add the following in your app
@@ -487,7 +500,6 @@ configurations.all {
 
 1- Please configure the IPN to avoid loosing any of the transaction status.
 
-
 ## License
 
 See [LICENSE][license].
@@ -496,8 +508,11 @@ See [LICENSE][license].
 
 [Support][1] | [Terms of Use][2] | [Privacy Policy][3]
 
- [1]: https://clickpay.freshdesk.com/en/support/solutions
- [2]: https://clickpay.com.sa/wps/portal/clickPay/clickpay/footerpages/termsandconditions
- [3]: https://clickpay.com.sa/wps/portal/clickPay/clickpay/footerpages/privacy
- [license]: https://github.com/clickpaysa/clickpay-ios-library-sample/blob/main/LICENSE
+[1]: https://clickpay.freshdesk.com/en/support/solutions
+
+[2]: https://clickpay.com.sa/wps/portal/clickPay/clickpay/footerpages/termsandconditions
+
+[3]: https://clickpay.com.sa/wps/portal/clickPay/clickpay/footerpages/privacy
+
+[license]: https://github.com/clickpaysa/clickpay-ios-library-sample/blob/main/LICENSE
 
